@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { signUp } from "../../services/firebaseServices";
+import { isUsernameExists } from "../../services/firebaseServices";
 
 const RegisterSection = () => {
+  const [error, setError] = useState(null);
   const { register, handleSubmit, watch } = useForm();
 
-  const onSubmitFunction = () => {};
+  const onSubmitFunction = async (data) => {
+    setError(null);
+    const usernameExists = await isUsernameExists(data.username);
+    console.log(usernameExists);
+    if (usernameExists) {
+      setError(
+        "This username is already taken. Please choose a different username."
+      );
+      return;
+    }
+    console.log("called");
+    signUp(data, () => {
+      setError("Email already in use, please login instead");
+    });
+  };
+
   const username = watch("username");
   const email = watch("email");
   const password = watch("password");
   const fullName = watch("fullName");
 
   const isValid = !fullName || password.length < 6 || !email || !username;
-
-  console.log(isValid);
 
   return (
     <form
@@ -21,7 +37,7 @@ const RegisterSection = () => {
     >
       <p className="text-center">Sign up now!</p>
       <input
-        type="text"
+        type="email"
         className="login-input"
         placeholder="Email"
         {...register("email", { required: true })}
@@ -44,7 +60,9 @@ const RegisterSection = () => {
         placeholder="Password"
         {...register("password", { required: true })}
       />
+      {error && <p className="text-xs text-[#db4545]">{error}</p>}
       <button
+        disabled={isValid}
         className={`text-sm font-bold ${
           isValid
             ? "cursor-default bg-[#4DB5F9]"

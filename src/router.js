@@ -6,7 +6,7 @@ import LoadingPage from "./pages/LoadingPage";
 const Login = lazy(() => import("./pages/Login"));
 
 const router = createBrowserRouter([
-  { path: "/", errorElement: ErrorPage },
+  { path: "/", errorElement: <ErrorPage /> },
   {
     path: "/login",
     element: (

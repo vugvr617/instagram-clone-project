@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { signUp } from "../../services/firebaseServices";
 import { isUsernameExists } from "../../services/firebaseServices";
 
 const RegisterSection = () => {
   const [error, setError] = useState(null);
   const { register, handleSubmit, watch } = useForm();
+  const navigate = useNavigate();
 
   const onSubmitFunction = async (data) => {
     setError(null);
     const usernameExists = await isUsernameExists(data.username);
-    console.log(usernameExists);
     if (usernameExists) {
       setError(
         "This username is already taken. Please choose a different username."
       );
       return;
     }
-    console.log("called");
     signUp(data, () => {
       setError("Email already in use, please login instead");
     });
+    navigate("/");
   };
 
   const username = watch("username");
@@ -60,7 +61,7 @@ const RegisterSection = () => {
         placeholder="Password"
         {...register("password", { required: true })}
       />
-      {error && <p className="text-xs text-[#db4545]">{error}</p>}
+      {error && <p className="text-xs text-center text-[#db4545]">{error}</p>}
       <button
         disabled={isValid}
         className={`text-sm font-bold ${

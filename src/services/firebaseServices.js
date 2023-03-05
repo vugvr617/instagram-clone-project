@@ -1,7 +1,6 @@
 import { auth, database } from "../lib/firebase";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
   doc,
@@ -31,17 +30,6 @@ export const signUp = (data, errorCallback) => {
     });
 };
 
-export const signIn = (data, errorCallback) => {
-  const { email, password } = data;
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      return userCredential;
-    })
-    .catch((error) => {
-      return errorCallback(error.message);
-    });
-};
-
 export const isUsernameExists = async (username) => {
   const usersQuery = query(
     collection(database, "users"),
@@ -49,10 +37,6 @@ export const isUsernameExists = async (username) => {
   );
 
   const querySnapshot = await getDocs(usersQuery);
-
-  console.log(querySnapshot);
-
-  console.log(querySnapshot.size);
 
   return querySnapshot.size > 0;
 };

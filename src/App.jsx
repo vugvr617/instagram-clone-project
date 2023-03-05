@@ -1,11 +1,14 @@
 import React from "react";
 import "./App.css";
+import AuthWrapper from "./layouts/AuthWrapper";
 
 const App = () => {
   return (
-    <div>
-      <p>Instagram</p>
-    </div>
+    <AuthWrapper>
+      <div>
+        <p>Instagram</p>
+      </div>
+    </AuthWrapper>
   );
 };
 

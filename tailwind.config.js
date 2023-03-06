@@ -5,10 +5,11 @@ module.exports = {
   content: [
     "./src/pages/**/*.{js,jsx}",
     "./src/components/**/*.{js,jsx}",
+    "./src/layouts/**/*{js,jsx}",
   ],
   theme: {
     fontFamily: {
-      sans: ["Roboto", ...defaultTheme.fontFamily.sans]
-    }
+      sans: ["Roboto", ...defaultTheme.fontFamily.sans],
+    },
   },
 };

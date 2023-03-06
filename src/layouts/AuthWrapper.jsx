@@ -9,9 +9,7 @@ const AuthWrapper = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("called");
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         navigate("/");
       } else {
@@ -20,7 +18,7 @@ const AuthWrapper = ({ children }) => {
     });
   }, [auth]);
 
-  return <div>{children}</div>;
+  return <div className="h-[100vh] w-[100%]">{children}</div>;
 };
 
 AuthWrapper.propTypes = { children: PropTypes.node.isRequired };

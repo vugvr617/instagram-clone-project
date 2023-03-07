@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import MoreModal from "../components/Navigation/MoreModal";
+import NotificationsModal from "../components/Navigation/NotificationsModal";
 import { navigationItems } from "../helpers/NavigationItems";
 import { HiBars3 } from "react-icons/hi2";
 import SearchModal from "../components/Navigation/SearchModal";
@@ -8,6 +9,7 @@ import SearchModal from "../components/Navigation/SearchModal";
 const NavigationLayout = ({ children }) => {
   const [isCollapsed, setCollapsed] = useState(false);
   const [activeNav, setActiveNav] = useState(navigationItems[0].title);
+  const [isNotificationsVisible, setNotificationsVisible] = useState(false);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -16,8 +18,11 @@ const NavigationLayout = ({ children }) => {
     window.addEventListener("resize", () => {
       setWindowWidth(window.innerWidth);
     });
-    windowWidth < 1024 ? setCollapsed(true) : setCollapsed(false);
-    if (windowWidth < 768) setSearchVisible(false);
+    window.innerWidth < 1024 ? setCollapsed(true) : setCollapsed(false);
+    if (window.innerWidth < 768) {
+      setNotificationsVisible(false);
+      setSearchVisible(false);
+    }
   }, [window.innerWidth]);
 
   const isMobile = windowWidth < 768;
@@ -54,9 +59,25 @@ const NavigationLayout = ({ children }) => {
                     setActiveNav(nav.title);
                     setSearchVisible(false);
                     if (nav.title === "Search") {
+                      setNotificationsVisible(false);
                       setSearchVisible(!isSearchVisible);
                       if (windowWidth > 1024) {
-                        setCollapsed(!isCollapsed);
+                        if (isNotificationsVisible) {
+                          setCollapsed(true);
+                        } else {
+                          setCollapsed(!isCollapsed);
+                        }
+                      }
+                    }
+                    if (nav.title === "Notifications") {
+                      setSearchVisible(false);
+                      setNotificationsVisible(!isNotificationsVisible);
+                      if (windowWidth > 1024) {
+                        if (isSearchVisible) {
+                          setCollapsed(true);
+                        } else {
+                          setCollapsed(!isCollapsed);
+                        }
                       }
                     }
                   }}
@@ -105,6 +126,7 @@ const NavigationLayout = ({ children }) => {
           </div>
         )}
       </div>
+      <NotificationsModal isVisible={isNotificationsVisible} />
       <SearchModal isVisible={isSearchVisible} />
       <div className="w-[100%] bg-[#fafafa]">{children}</div>
     </div>

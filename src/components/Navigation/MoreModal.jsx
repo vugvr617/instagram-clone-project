@@ -22,7 +22,7 @@ const MoreModal = ({ isVisible }) => {
     <div
       className={`${
         isVisible ? "block" : "hidden"
-      } bg-[#f9f6f6] shadow-lg p-0.5 absolute min-w-[200px] rounded-sm w-[80%]`}
+      } bg-[#f9f6f6] z-[100] shadow-lg p-0.5 absolute min-w-[200px] rounded-sm w-[80%]`}
     >
       <button className="bg-[#ffffff] hover:bg-[#f9f6f6] w-[100%] h-[40px] flex items-center px-2 border-b-[1px]">
         <p className="font-light text-sm">Settings</p>

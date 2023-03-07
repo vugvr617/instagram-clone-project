@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import MoreModal from "../components/Login/MoreModal";
+import MoreModal from "../components/Navigation/MoreModal";
 import { navigationItems } from "../helpers/NavigationItems";
 import { HiBars3 } from "react-icons/hi2";
+import SearchModal from "../components/Navigation/SearchModal";
 
 const NavigationLayout = ({ children }) => {
+  const [isCollapsed, setCollapsed] = useState(false);
   const [activeNav, setActiveNav] = useState(navigationItems[0].title);
+  const [isSearchVisible, setSearchVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
       setWindowWidth(window.innerWidth);
-      console.log(windowWidth);
     });
+    windowWidth < 1024 ? setCollapsed(true) : setCollapsed(false);
+    if (windowWidth < 768) setSearchVisible(false);
   }, [window.innerWidth]);
 
   const isMobile = windowWidth < 768;
@@ -26,16 +30,16 @@ const NavigationLayout = ({ children }) => {
     <div
       className={`flex flex-col-reverse w-[100%] min-h-[860px] h-[100%] md:flex-row`}
     >
-      <div className="w-[100%] justify-around border-t-[1px] h-[50px] md:w-[80px] md:h-[100%] lg:w-[17%] flex flex-col md:justify-between transition-all duration-300 bg-[#ffffff] md:border-r-[1px] md:py-8 md:px-5 border-r-[#dbdbdb]">
+      <div
+        className={`${
+          isCollapsed ? "md:w-[80px]" : "lg:w-[17%]"
+        } w-[100%] relative justify-around border-t-[1px] h-[50px] md:w-[80px] md:h-[100%] flex flex-col md:justify-between transition-all duration-300 bg-[#ffffff] md:border-r-[1px] md:py-8 md:px-5 border-r-[#dbdbdb]`}
+      >
         <div className="md:h-[500px] flex justify-between flex-col">
           {!isMobile && (
             <img
-              src={
-                1024 < windowWidth
-                  ? "/images/logo.png"
-                  : "/images/logo-small.png"
-              }
-              className={`${1024 < windowWidth ? "w-[103px]" : "w-[30px]"}`}
+              src={!isCollapsed ? "/images/logo.png" : "/images/logo-small.png"}
+              className={`${!isCollapsed ? "w-[103px]" : "w-[30px]"}`}
             ></img>
           )}
           <div className="flex justify-around md:gap-4 md:flex-col">
@@ -48,6 +52,13 @@ const NavigationLayout = ({ children }) => {
                 <div
                   onClick={() => {
                     setActiveNav(nav.title);
+                    setSearchVisible(false);
+                    if (nav.title === "Search") {
+                      setSearchVisible(!isSearchVisible);
+                      if (windowWidth > 1024) {
+                        setCollapsed(!isCollapsed);
+                      }
+                    }
                   }}
                   key={nav.title}
                   className={`flex ${
@@ -60,7 +71,7 @@ const NavigationLayout = ({ children }) => {
                       : nav.inactiveIcon}
                   </p>
                   <p
-                    className={`hidden lg:block ${
+                    className={`${isCollapsed ? "hidden" : "block"} ${
                       nav.title === activeNav ? "font-medium" : "font-light"
                     } text-[16px]`}
                   >
@@ -83,12 +94,19 @@ const NavigationLayout = ({ children }) => {
               <p className="text-[30px]">
                 <HiBars3 />
               </p>
-              <p className="hidden lg:block text-[16px] font-light">More</p>
+              <p
+                className={`${
+                  isCollapsed ? "hidden" : "block"
+                } text-[16px] font-light`}
+              >
+                More
+              </p>
             </div>
           </div>
         )}
       </div>
-      <div className="w-[10%] bg-[#fafafa]">{children}</div>
+      <SearchModal isVisible={isSearchVisible} />
+      <div className="w-[100%] bg-[#fafafa]">{children}</div>
     </div>
   );
 };

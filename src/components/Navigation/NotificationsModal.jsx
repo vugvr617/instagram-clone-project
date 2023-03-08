@@ -1,5 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
+import FollowingNotification from "../Notification/FollowingNotification";
+import LikeNotification from "../Notification/LikeNotification";
 
 const NotificationsModal = ({ isVisible }) => {
   return (
@@ -16,6 +18,12 @@ const NotificationsModal = ({ isVisible }) => {
         } py-4 flex justify-between flex-col px-4 border-b-[1px]`}
       >
         <p className="text-[26px] select-none font-bold">Notifications</p>
+      </div>
+      <div
+        className={`${isVisible ? "" : "hidden"} px-4 py-3 transition-none flex flex-col gap-3`}
+      >
+        <FollowingNotification />
+        <LikeNotification />
       </div>
     </div>
   );

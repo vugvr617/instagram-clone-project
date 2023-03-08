@@ -33,7 +33,7 @@ const NavigationLayout = ({ children }) => {
 
   return (
     <div
-      className={`flex flex-col-reverse w-[100%] min-h-[860px] h-[100%] md:flex-row`}
+      className={`flex flex-col-reverse w-[100%] select-none min-h-[860px] h-[100%] md:flex-row`}
     >
       <div
         className={`${
@@ -57,7 +57,6 @@ const NavigationLayout = ({ children }) => {
                 <div
                   onClick={() => {
                     setActiveNav(nav.title);
-                    setSearchVisible(false);
                     if (nav.title === "Search") {
                       setNotificationsVisible(false);
                       setSearchVisible(!isSearchVisible);
@@ -69,7 +68,7 @@ const NavigationLayout = ({ children }) => {
                         }
                       }
                     }
-                    if (nav.title === "Notifications") {
+                    else if (nav.title === "Notifications") {
                       setSearchVisible(false);
                       setNotificationsVisible(!isNotificationsVisible);
                       if (windowWidth > 1024) {
@@ -78,6 +77,12 @@ const NavigationLayout = ({ children }) => {
                         } else {
                           setCollapsed(!isCollapsed);
                         }
+                      }
+                    } else {
+                      setSearchVisible(false);
+                      setNotificationsVisible(false);
+                      if (windowWidth > 1024) {
+                        setCollapsed(false); 
                       }
                     }
                   }}
@@ -94,7 +99,7 @@ const NavigationLayout = ({ children }) => {
                   <p
                     className={`${isCollapsed ? "hidden" : "block"} ${
                       nav.title === activeNav ? "font-medium" : "font-light"
-                    } text-[16px]`}
+                    } text-[16px] select-none`}
                   >
                     {nav.title}
                   </p>

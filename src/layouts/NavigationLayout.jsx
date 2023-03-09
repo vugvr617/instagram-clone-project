@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import MoreModal from "../components/Navigation/MoreModal";
 import NotificationsModal from "../components/Navigation/NotificationsModal";
 import { navigationItems } from "../helpers/NavigationItems";
 import { HiBars3 } from "react-icons/hi2";
+import { useNavigate, Outlet } from "react-router-dom";
 import CreateModal from "../components/CreatePost/CreateModal";
 import SearchModal from "../components/Navigation/SearchModal";
+import AuthWrapper from "./AuthWrapper";
 
-const NavigationLayout = ({ children }) => {
+const NavigationLayout = () => {
   const [isCollapsed, setCollapsed] = useState(false);
   const [isCreateVisible, setCreateVisible] = useState(false);
   const [activeNav, setActiveNav] = useState(navigationItems[0].title);
+  const [latestPath, setLatestPath] = useState(navigationItems[0].title);
   const [isNotificationsVisible, setNotificationsVisible] = useState(false);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -24,7 +27,6 @@ const NavigationLayout = ({ children }) => {
     if (window.innerWidth < 768) {
       setNotificationsVisible(false);
       setSearchVisible(false);
-      setCreateVisible(false);
     }
   }, [window.innerWidth]);
 
@@ -35,8 +37,8 @@ const NavigationLayout = ({ children }) => {
   };
 
   return (
-    <>
-      <CreateModal isVisible={isCreateVisible} setVisible={setCreateVisible}/>
+    <AuthWrapper>
+      <CreateModal isVisible={isCreateVisible} setVisible={setCreateVisible} />
       <div
         className={`flex flex-col-reverse w-[100%] select-none min-h-[860px] h-[100%] md:flex-row`}
       >
@@ -67,6 +69,9 @@ const NavigationLayout = ({ children }) => {
                       if (nav.title === "Search") {
                         setNotificationsVisible(false);
                         setSearchVisible(!isSearchVisible);
+                        if (isSearchVisible) {
+                          setActiveNav(latestPath);
+                        }
                         if (windowWidth > 1024) {
                           if (isNotificationsVisible) {
                             setCollapsed(true);
@@ -75,13 +80,18 @@ const NavigationLayout = ({ children }) => {
                           }
                         }
                       } else if (nav.title === "Notifications") {
-                        setSearchVisible(false);
-                        setNotificationsVisible(!isNotificationsVisible);
-                        if (windowWidth > 1024) {
-                          if (isSearchVisible) {
-                            setCollapsed(true);
-                          } else {
-                            setCollapsed(!isCollapsed);
+                        if (!isMobile) {
+                          setSearchVisible(false);
+                          setNotificationsVisible(!isNotificationsVisible);
+                          if (isNotificationsVisible) {
+                            setActiveNav(latestPath);
+                          }
+                          if (windowWidth > 1024) {
+                            if (isSearchVisible) {
+                              setCollapsed(true);
+                            } else {
+                              setCollapsed(!isCollapsed);
+                            }
                           }
                         }
                       } else if (nav.title === "Create") {
@@ -91,6 +101,8 @@ const NavigationLayout = ({ children }) => {
                       } else {
                         setCreateVisible(false);
                         setSearchVisible(false);
+                        navigate(nav.path);
+                        setLatestPath(nav.title);
                         setNotificationsVisible(false);
                         if (windowWidth > 1024) {
                           setCollapsed(false);
@@ -144,12 +156,10 @@ const NavigationLayout = ({ children }) => {
         </div>
         <NotificationsModal isVisible={isNotificationsVisible} />
         <SearchModal isVisible={isSearchVisible} />
-        <div className="w-[100%] bg-[#fafafa]">{children}</div>
+        <div className="w-[100%] bg-[#fafafa]"><Outlet/></div>
       </div>
-    </>
+    </AuthWrapper>
   );
 };
-
-NavigationLayout.propTypes = { children: PropTypes.node.isRequired };
 
 export default NavigationLayout;

@@ -1,17 +1,12 @@
 import React from "react";
 import "./App.css";
-import AuthWrapper from "./layouts/AuthWrapper";
-import NavigationLayout from "./layouts/NavigationLayout";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
 
 const App = () => {
   return (
-    <AuthWrapper>
-      <NavigationLayout>
-        <div>
-          <p>Instagram</p>
-        </div>
-      </NavigationLayout>
-    </AuthWrapper>
+    <RouterProvider router={router}>
+    </RouterProvider>
   );
 };
 

@@ -12,9 +12,19 @@ import {
 import { MdOutlineExplore, MdExplore } from "react-icons/md";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { IoMdAddCircleOutline, IoMdAddCircle } from "react-icons/io";
+import Profile from "../pages/Profile";
+import Direct from "../pages/Direct";
+import Explore from "../pages/Explore";
+import Home from "../pages/Home";
 
 export const navigationItems = [
-  { title: "Home", inactiveIcon: <BiHome />, activeIcon: <HiHome /> },
+  {
+    title: "Home",
+    inactiveIcon: <BiHome />,
+    activeIcon: <HiHome />,
+    path: "home",
+    element: <Home />,
+  },
   {
     title: "Search",
     inactiveIcon: <RiSearch2Line />,
@@ -24,11 +34,15 @@ export const navigationItems = [
     title: "Explore",
     inactiveIcon: <MdOutlineExplore />,
     activeIcon: <MdExplore />,
+    path: "explore",
+    element: <Explore />,
   },
   {
     title: "Messages",
     inactiveIcon: <RiMessengerLine />,
     activeIcon: <RiMessengerFill />,
+    path: "direct",
+    element: <Direct />,
   },
   {
     title: "Notifications",
@@ -44,5 +58,7 @@ export const navigationItems = [
     title: "Profile",
     inactiveIcon: <RiAccountCircleLine />,
     activeIcon: <RiAccountCircleFill />,
+    path: "profile",
+    element: <Profile />,
   },
 ];

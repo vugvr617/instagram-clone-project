@@ -30,9 +30,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+em-emoji-picker {
+  @apply bg-[black] z-[99];
 }
 
 .login-input {
@@ -64,4 +79,8 @@ code {
 .animate-right-to-left {
   animation: right-to-left 0.2s ease;
   width: 0;
+}
+
+.post-buttons {
+  @apply text-[28px] transition-all duration-100 hover:scale-95 hover:text-[gray];
 }

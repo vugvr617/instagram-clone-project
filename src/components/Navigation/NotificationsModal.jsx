@@ -10,7 +10,7 @@ const NotificationsModal = ({ isVisible }) => {
         isVisible
           ? "block animate-left-to-right w-[400px]"
           : "w-[0px] animate-right-to-left"
-      } rounded-r-2xl absolute h-[100%] ml-[80px]`}
+      } rounded-r-2xl absolute h-[100%] z-[98] ml-[80px]`}
     >
       <div
         className={`${

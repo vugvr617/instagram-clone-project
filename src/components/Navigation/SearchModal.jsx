@@ -9,7 +9,7 @@ const SearchModal = ({ isVisible }) => {
         isVisible
           ? "block animate-left-to-right w-[400px]"
           : "w-[0px] animate-right-to-left"
-      } rounded-r-2xl absolute h-[100%] ml-[80px]`}
+      } rounded-r-2xl absolute z-[98] h-[100%] ml-[80px]`}
     >
       <div
         className={`${
@@ -28,7 +28,7 @@ const SearchModal = ({ isVisible }) => {
           <p className="text-[18px] font-semibold">Recent</p>
           <button className="text-[14px] text-[#0095f6]">Clear all</button>
         </div>
-        <div className="flex pt-3 flex-col gap-3">
+        <div className="flex pt-3 max-h-[200px] flex-col gap-3">
           <SearchItem />
         </div>
       </div>

@@ -2,15 +2,26 @@ import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import { navigationItems } from "./helpers/NavigationItems";
-import NavigationLayout from "./layouts/NavigationLayout";
 import LoadingPage from "./pages/LoadingPage";
+import AuthWrapper from "./layouts/AuthWrapper";
 
 const Login = lazy(() => import("./pages/Login"));
+const NavigationLayout = lazy(() => {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(import("./layouts/NavigationLayout")), 4000)
+  );
+});
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <NavigationLayout />,
+    element: (
+      <AuthWrapper>
+        <Suspense fallback={<LoadingPage />}>
+          <NavigationLayout />
+        </Suspense>
+      </AuthWrapper>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

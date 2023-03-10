@@ -24,10 +24,8 @@ const NavigationLayout = () => {
       setWindowWidth(window.innerWidth);
     });
     window.innerWidth < 1024 ? setCollapsed(true) : setCollapsed(false);
-    if (window.innerWidth < 768) {
-      setNotificationsVisible(false);
-      setSearchVisible(false);
-    }
+    setNotificationsVisible(false);
+    setSearchVisible(false);
   }, [window.innerWidth]);
 
   const isMobile = windowWidth < 768;
@@ -40,12 +38,12 @@ const NavigationLayout = () => {
     <AuthWrapper>
       <CreateModal isVisible={isCreateVisible} setVisible={setCreateVisible} />
       <div
-        className={`flex flex-col-reverse w-[100%] select-none min-h-[860px] h-[100%] md:flex-row`}
+        className={`flex overflow-hidden flex-col-reverse w-[100%] select-none min-h-[860px] h-[100%] md:flex-row`}
       >
         <div
           className={`${
             isCollapsed ? "md:w-[80px]" : "lg:w-[17%]"
-          } w-[100%] relative justify-around border-t-[1px] h-[50px] md:w-[80px] md:h-[100%] flex flex-col md:justify-between transition-all duration-300 bg-[#ffffff] md:border-r-[1px] md:py-8 md:px-5 border-r-[#dbdbdb]`}
+          } w-[100%] relative inherit justify-around border-t-[1px] h-[50px] md:w-[80px] md:h-[100%] flex flex-col md:justify-between transition-all duration-300 bg-[#ffffff] md:border-r-[1px] md:py-8 md:px-5 border-r-[#dbdbdb]`}
         >
           <div className="md:h-[500px] flex justify-between flex-col">
             {!isMobile && (
@@ -98,6 +96,9 @@ const NavigationLayout = () => {
                         setSearchVisible(false);
                         setNotificationsVisible(false);
                         setCreateVisible(true);
+                        if (windowWidth > 1024) {
+                          setCollapsed(false);
+                        }
                       } else {
                         setCreateVisible(false);
                         setSearchVisible(false);
@@ -156,7 +157,7 @@ const NavigationLayout = () => {
         </div>
         <NotificationsModal isVisible={isNotificationsVisible} />
         <SearchModal isVisible={isSearchVisible} />
-        <div className="w-[100%] bg-[#fafafa]"><Outlet/></div>
+        <div className="w-[100%] h-[100%] overflow-auto bg-[#fafafa]"><Outlet/></div>
       </div>
     </AuthWrapper>
   );

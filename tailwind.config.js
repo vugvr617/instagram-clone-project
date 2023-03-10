@@ -7,6 +7,7 @@ module.exports = {
     "./src/components/**/*.{js,jsx}",
     "./src/layouts/**/*{js,jsx}",
   ],
+  plugins: [require("tailwind-scrollbar-hide")],
   theme: {
     fontFamily: {
       sans: ["Roboto", ...defaultTheme.fontFamily.sans],

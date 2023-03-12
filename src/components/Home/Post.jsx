@@ -1,10 +1,12 @@
-import React from "react";
-import { AiOutlineHeart } from "react-icons/ai";
-import { FiMessageCircle } from "react-icons/fi";
-import { IoPaperPlaneOutline, IoBookmarkOutline } from "react-icons/io5";
+import React, { useState } from "react";
 import CommentInput from "./CommentInput";
+import PostInteractions from "./PostInteractions";
+import { AiFillHeart } from "react-icons/ai";
 
 const Post = () => {
+  const [isPostLiked, setPostLiked] = useState(false);
+  const [isAnimationShown, setAnimationShown] = useState(false);
+
   return (
     <div className="w-[470px] rounded-lg border-[1px] bg-[#ffffff]">
       <div className="w-[100%] flex gap-2 items-center h-[56px] px-2">
@@ -14,21 +16,31 @@ const Post = () => {
         />
         <p className="font-[500] text-xs">sub.street</p>
       </div>
-      <img
-        className="w-[100%] max-w-[530px] object-cover"
-        src="https://scontent.fbud6-3.fna.fbcdn.net/v/t39.30808-6/296869590_2954487288039840_4321671898105924298_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=D6u7omb13_oAX96y6Od&_nc_ht=scontent.fbud6-3.fna&oh=00_AfCtrQ9lJoQsJadR7MpMgDxRRb6pWQO6FL9vPIZxoe0mcQ&oe=640F1E89"
-      />
-      <div className="p-2 bg-[#ffffff] flex justify-between items-center">
-        <div className="flex h-full items-center gap-3">
-          <AiOutlineHeart className="post-buttons" />
-          <FiMessageCircle className="post-buttons" />
-          <IoPaperPlaneOutline className="post-buttons" />
-        </div>
-        <IoBookmarkOutline className="post-buttons" />
+      <div
+        className="relative"
+        onDoubleClick={() => {
+          setAnimationShown(true);
+          setPostLiked(true);
+          setTimeout(() => {
+            setAnimationShown(false);
+          }, 600);
+        }}
+      >
+        <img
+          className="w-[100%] max-w-[530px] object-cover"
+          src="https://scontent.fbud6-3.fna.fbcdn.net/v/t39.30808-6/296869590_2954487288039840_4321671898105924298_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=D6u7omb13_oAX96y6Od&_nc_ht=scontent.fbud6-3.fna&oh=00_AfCtrQ9lJoQsJadR7MpMgDxRRb6pWQO6FL9vPIZxoe0mcQ&oe=640F1E89"
+        />
+        {isAnimationShown && (
+          <AiFillHeart
+            className={`absolute text-[#ffffffe0] animate-like-button top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
+          />
+        )}
       </div>
+
+      <PostInteractions isPostLiked={isPostLiked} setPostLiked={setPostLiked} />
       <div className="flex flex-col gap-1 px-2 pb-2 border-b-[1px]">
         <p className="font-[600] text-xs">25 likes</p>
-        <p className="text-[16px] leading-4 font-normal">
+        <p className="text-[15px] leading-4 font-normal">
           <span className="font-[600]">sub.street</span> Luck is not necessary.
           - 👉🏽Escape the matrix! (via the 🔗 in my profile): @dreamlife_path - -
           Want to be successful? Hit that follow button!⬇️👍 ⚜️ @dreamlife_path

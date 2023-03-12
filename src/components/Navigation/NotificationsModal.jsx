@@ -29,6 +29,6 @@ const NotificationsModal = ({ isVisible }) => {
   );
 };
 
-NotificationsModal.propTypes = { isVisible: PropTypes.boolean };
+NotificationsModal.propTypes = { isVisible: PropTypes.bool };
 
 export default NotificationsModal;

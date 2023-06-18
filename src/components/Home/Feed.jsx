@@ -5,7 +5,7 @@ import FollowSuggestions from "./FollowSuggestions";
 
 const Feed = () => {
   return (
-    <div className="w-full flex justify-center gap-8 h-full py-5 px-5">
+    <div className="w-full flex px-[25%] gap-8 h-full py-5">
       <div className="flex flex-col gap-3">
         <Post></Post>
         <Post></Post>

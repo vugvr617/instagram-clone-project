@@ -1,20 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ModalWrapper from "../../layouts/ModalWrapper";
 
 const CreateModal = ({ isVisible, setVisible }) => {
-  const closeHandler = () => {
-    setVisible(false);
-  };
-
   return (
-    <div className="select-none">
+    <ModalWrapper isVisible={isVisible} setVisible={setVisible}>
       <div
-        onClick={closeHandler}
         className={`${
           isVisible ? "block" : "hidden"
-        } h-full z-[99] absolute w-full select-none bg-[#00000057]`}
-      ></div>
-      <div className={`${isVisible ? "absolute block" : "hidden"} top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[38%] z-[100] min-w-[350px] rounded-2xl bg-[#ffffff] aspect-square`}>
+        } top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2 w-[38%] z-[100] min-w-[350px] rounded-2xl bg-[#ffffff] aspect-square`}
+      >
         <div className="h-[40px] flex items-center justify-center border-b-[1px]">
           <p className="text-center text-sm font-semibold">Create new post</p>
         </div>
@@ -29,7 +24,7 @@ const CreateModal = ({ isVisible, setVisible }) => {
           </button>
         </div>
       </div>
-    </div>
+    </ModalWrapper>
   );
 };
 

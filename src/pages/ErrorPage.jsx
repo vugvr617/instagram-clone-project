@@ -3,7 +3,7 @@ import React from "react";
 const ErrorPage = () => {
   return (
     <div>
-      Z<p>Error 404 Murad Gijdillax</p>
+      <p>Error 404</p>
     </div>
   );
 };

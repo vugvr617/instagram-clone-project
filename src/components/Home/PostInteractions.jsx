@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FiMessageCircle } from "react-icons/fi";
-import { IoPaperPlaneOutline, IoBookmarkOutline } from "react-icons/io5";
+import {
+  IoPaperPlaneOutline,
+  IoBookmarkOutline,
+  IoBookmark,
+} from "react-icons/io5";
 import { PropTypes } from "prop-types";
 
 const PostInteractions = ({ isPostLiked, setPostLiked }) => {
+  const [isSaved, setSaved] = useState(false);
+
   return (
     <div className="p-2 bg-[#ffffff] flex justify-between items-center">
       <div className="flex h-full items-center gap-3">
@@ -26,7 +32,17 @@ const PostInteractions = ({ isPostLiked, setPostLiked }) => {
           <IoPaperPlaneOutline className="post-buttons" />
         </button>
       </div>
-      <IoBookmarkOutline className="post-buttons" />
+      <button
+        onClick={() => {
+          setSaved(!isSaved);
+        }}
+      >
+        {isSaved ? (
+          <IoBookmark className="post-buttons" />
+        ) : (
+          <IoBookmarkOutline className="post-buttons" />
+        )}
+      </button>
     </div>
   );
 };
